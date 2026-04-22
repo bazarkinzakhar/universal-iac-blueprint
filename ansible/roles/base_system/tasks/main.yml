@@ -1,0 +1,29 @@
+---
+- name: Update apt cache and upgrade system
+  apt:
+    update_cache: yes
+    upgrade: dist
+    cache_valid_time: 3600
+
+- name: Install essential packages
+  apt:
+    name:
+      - curl
+      - git
+      - ufw
+      - htop
+    state: present
+
+- name: Set up UFW (Firewall)
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - "22"
+    - "80"
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+    policy: deny

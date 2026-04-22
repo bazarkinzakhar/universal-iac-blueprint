@@ -1,0 +1,19 @@
+plugin: aws_ec2
+regions:
+  - eu-central-1
+
+# группирование хостов по тегам, заданным в Terraform
+keyed_groups:
+  - key: tags.Role
+    prefix: role
+  - key: tags.Environment
+    prefix: env
+
+# отсеивание лишних инстансов из аккаунта
+filters:
+  tag:ManagedBy: Terraform
+  instance-state-name: ["running"]
+
+hostnames:
+  - dns-name
+  - network-interface.addresses.association.public-ip

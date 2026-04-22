@@ -1,0 +1,8 @@
+---
+- name: Provision Infrastructure
+  hosts: role_app
+  become: yes
+  gather_facts: yes
+
+  roles:
+    - base_system
