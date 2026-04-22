@@ -6,3 +6,5 @@
 
   roles:
     - base_system
+    - docker
+    - observability

@@ -1,0 +1,23 @@
+---
+- name: Create directory for observability stack
+  file:
+    path: /opt/observability
+    state: directory
+    owner: ubuntu
+    group: docker
+    mode: "0755"
+
+- name: Template docker-compose file for metrics
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/observability/docker-compose.yml
+    owner: ubuntu
+    group: docker
+    mode: "0644"
+
+- name: Start observability stack via Docker Compose plugin
+  command: docker compose up -d
+  args:
+    chdir: /opt/observability
+  register: compose_output
+  changed_when: "'Started' in compose_output.stdout or 'Created' in compose_output.stdout"
