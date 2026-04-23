@@ -27,3 +27,9 @@ variable "ssh_public_key" {
   type        = string
   description = "Публичный ключ для доступа по SSH"
 }
+
+variable "allowed_ips" {
+  type        = list(string)
+  description = "Список IPv4 CIDR блоков, которым разрешено подключение"
+  default     = []
+}
